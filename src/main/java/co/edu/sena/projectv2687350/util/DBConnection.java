@@ -1,0 +1,37 @@
+package co.edu.sena.projectv2687350.util;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class DBConnection {
+
+    private static final String URL = "jdbc:mysql://127.0.0.1:8080/MyApp?serverTimezone=America/Bogota";
+
+    private static final String USER  = "valencia";
+
+    private static final String PASS = "Juan/1021669526";
+
+    private static BasicDataSource pool;
+
+    public static BasicDataSource getInstance() throws SQLException {
+        if (pool == null) {
+
+            pool = new BasicDataSource();
+            pool.setUrl(URL);
+            pool.setUsername(USER);
+            pool.setPassword(PASS);
+
+            pool.setInitialSize(3);
+            pool.setMinIdle(3);
+            pool.setMaxIdle(8);
+            pool.setMaxTotal(8);
+        }
+        return pool;
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return getInstance().getConnection();
+    }
+}
